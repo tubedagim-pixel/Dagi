@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #333;
+      position: relative;
+    }
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      max-width: 500px;
+      z-index: 2;
+      animation: fadeIn 1.5s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3em;
+      color: #e91e63;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    p { font-size: 1.2em; line-height: 1.6; margin-bottom: 20px; }
+    .buttons { margin: 30px 0; }
+    button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      min-width: 140px;
+    }
+    .yes { background: #e91e63; color: white; }
+    .no { background: #f44336; color: white; }
+    button:hover { transform: scale(1.1); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    button:active { transform: scale(0.95); }
+    #message { margin-top: 20px; font-size: 1.5em; color: #e91e63; font-weight: 600; display: none; }
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      font-size: 2em;
+      pointer-events: none;
+      z-index: 1;
+      animation: float linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-150px) rotate(360deg); opacity: 0; }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 2.5em; }
+      .container { padding: 30px 20px; margin: 10px; }
+      p, button { font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Will you be my Valentine, Saron?</h1>
+    <p>I can't imagine spending Valentine's Day without you. You make every day brighter and my heart fuller. 💕 Will you be mine?</p>
+    <!-- Optional: Add your photo -->
+    <!-- <img src="https://your-photo-url.jpg" alt="Us" style="max-width:100%; border-radius:15px; margin:15px 0;"> -->
+    <div class="buttons">
+      <button class="yes" onclick="yesClick()">Yes! 💕</button>
+      <button class="no" onclick="noClick()">No</button>
+    </div>
+    <div id="message"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '💕';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+      heart.style.animationDelay = Math.random() * 3 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 12000);
+    }
+    setInterval(createHeart, 400);
+
+    // Yes/No logic
+    let noCount = 0;
+    const noMessages = [
+      "Are you sure? 😢",
+      "Please think again... 🥺",
+      "I promise it'll be amazing! ❤️",
+      "Don't break my heart 💔",
+      "Pretty please? 🍒",
+      "Okay okay... but I still love you! 😘"
+    ];
+
+    function yesClick() {
+      const msg = document.getElementById('message');
+      msg.innerHTML = "Yay! I love you so much! ❤️ Let's make this Valentine's the best ever!";
+      msg.style.display = 'block';
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      // Optionally hide buttons: document.querySelector('.buttons').style.display = 'none';
+    }
+
+    function noClick() {
+      const noBtn = document.querySelector('.no');
+      noBtn.textContent = noMessages[noCount % noMessages.length];
+      noCount++;
+    }
+  </script>
+</body>
+</html>
